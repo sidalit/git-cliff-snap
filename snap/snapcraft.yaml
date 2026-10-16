@@ -1,0 +1,74 @@
+name: git-cliff
+base: core26
+version: '2.14.2'
+title: git-cliff
+summary: Generate changelogs from your Git history
+description: |
+  git-cliff generates changelogs from the Git history of a project. It
+  understands conventional commits and other commit formats, and the
+  output is fully customizable with templates.
+
+  **Examples**
+
+     git cliff --init
+     git cliff -o CHANGELOG.md
+     git cliff --unreleased --bump
+     git cliff --latest --strip header
+
+  **File access**
+
+  git-cliff can use repositories in your home directory. To also use USB
+  drives and other removable media (/media, /mnt), run:
+
+     sudo snap connect git-cliff:removable-media
+
+  The global config file is
+  ~/snap/git-cliff/current/.config/git-cliff/cliff.toml.
+license: MIT OR Apache-2.0
+grade: stable
+confinement: strict
+website: https://git-cliff.org
+source-code: https://github.com/orhun/git-cliff
+issues: https://github.com/orhun/git-cliff/issues
+contact: https://github.com/sidalit/git-cliff-snap/issues
+
+platforms:
+  amd64:
+  arm64:
+  armhf:
+  ppc64el:
+  riscv64:
+  s390x:
+
+apps:
+  git-cliff:
+    command: bin/git-cliff
+    completer: share/bash-completion/completions/git-cliff
+    plugs:
+      - home
+      - removable-media
+      - network
+
+parts:
+  git-cliff:
+    plugin: rust
+    source: https://github.com/orhun/git-cliff.git
+    source-tag: 'v2.14.2'
+    rust-channel: '1.93.0'
+    rust-path:
+      - git-cliff
+    # Leave out the update check: snap refreshes already handle updates.
+    rust-no-default-features: true
+    rust-features:
+      - integrations
+    build-packages:
+      - build-essential
+      - pkg-config
+    override-build: |
+      craftctl default
+      mkdir -p completions
+      OUT_DIR=completions "$CRAFT_PART_INSTALL/bin/git-cliff-completions"
+      install -Dm644 completions/git-cliff.bash "$CRAFT_PART_INSTALL/share/bash-completion/completions/git-cliff"
+      rm "$CRAFT_PART_INSTALL/bin/git-cliff-completions" "$CRAFT_PART_INSTALL/bin/git-cliff-mangen"
+      install -Dm644 LICENSE-APACHE "$CRAFT_PART_INSTALL/share/doc/git-cliff/LICENSE-APACHE"
+      install -Dm644 LICENSE-MIT "$CRAFT_PART_INSTALL/share/doc/git-cliff/LICENSE-MIT"
