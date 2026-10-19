@@ -1,6 +1,6 @@
 name: git-cliff
 base: core26
-version: '2.14.2'
+adopt-info: git-cliff
 title: git-cliff
 summary: Generate changelogs from your Git history
 description: |
@@ -53,6 +53,7 @@ parts:
   git-cliff:
     plugin: rust
     source: https://github.com/orhun/git-cliff.git
+    # renovate: depName=orhun/git-cliff
     source-tag: 'v2.14.2'
     rust-channel: '1.93.0'
     rust-path:
@@ -64,6 +65,9 @@ parts:
     build-packages:
       - build-essential
       - pkg-config
+    override-pull: |
+      craftctl default
+      craftctl set version="$(git -C "$CRAFT_PART_SRC" describe --tags --match 'v[0-9]*' | sed 's/^v//')"
     override-build: |
       craftctl default
       mkdir -p completions
