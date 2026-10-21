@@ -51,7 +51,7 @@ The snap can only open repositories in your home folder and, with the `removable
 
 ## Update to a new upstream release
 
-Change `source-tag` in `snap/snapcraft.yaml`, then rebuild.
+Change `version` in `snap/snapcraft.yaml`, then rebuild.
 
 ## Automation
 
