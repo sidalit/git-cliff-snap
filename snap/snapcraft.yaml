@@ -28,8 +28,12 @@ license: MIT OR Apache-2.0
 grade: stable
 confinement: strict
 website: https://git-cliff.org
-source-code: https://github.com/orhun/git-cliff
-issues: https://github.com/orhun/git-cliff/issues
+source-code:
+  - https://github.com/orhun/git-cliff
+  - https://github.com/sidalit/git-cliff-snap
+issues:
+  - https://github.com/orhun/git-cliff/issues
+  - https://github.com/sidalit/git-cliff-snap/issues
 contact: https://github.com/sidalit/git-cliff-snap/issues
 
 platforms:
