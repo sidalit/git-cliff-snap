@@ -2,6 +2,7 @@ name: git-cliff
 base: core26
 version: '2.14.2'
 title: git-cliff
+icon: snap/gui/git-cliff.png
 summary: Generate changelogs from your Git history
 description: |
   git-cliff generates changelogs from the Git history of a project. It
